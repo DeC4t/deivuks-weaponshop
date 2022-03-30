@@ -23,3 +23,4 @@
 **SUPPORT**
 
 *Our team is always ready to help you with our resources, if it doesn’t work or it shows some errors you can always create a ticket in our discord.*
+[Discord](discord.com/invite/pRVBG94Wtw)
