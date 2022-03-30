@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/2a806e65da.js" crossorigin="anonymous"></script>
+    <script src="./main.js"></script>
+    <title>Deivuks WeaponShop</title>
+</head>
+<body id="body">
+
+    <div id="shop">
+        <ul>
+            <li><a onclick="next({next: 'weapons'})" id="l_weapons"></a></li>
+            <li><a onclick="next({next: 'attachments'})" id="l_attachments"></a></li>
+            <li><a onclick="next({next: 'bullets'})" id="l_bullets"></a></li>
+        </ul>
+        <ul style="margin-top: -52px;">
+            <li class="user_info"><a class="active" onclick="" style="height: 24px;" id="close"><i class="fa-solid fa-square-xmark" style="font-size: 30px; margin-top: -2.5px;"></i></a></li>
+            <li class="user_info"><a><i class="fa-solid fa-credit-card" style="margin-right: 5px;"></i> <span id="user_money"></span></a></li>
+            <li class="user_info"><a><i class="fa-solid fa-wallet" style="margin-right: 5px;"></i> <span id="user_bank"></span></a></li>
+        </ul>
+        <div id="weapons" class="mid_box">
+         
+        </div>
+        <div id="attachments" class="mid_box">
+
+        </div>
+        <div id="bullets" class="mid_box">
+
+        </div>
+    </div>
+
+    <div id="notify">
+            
+    </div>
+    <div id="notification">
+        
+    </div>
+
+</body>
+</html>
