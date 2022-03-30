@@ -39,7 +39,33 @@ ESX.RegisterServerCallback('d-weaponshop:buyweapon', function(source, cb, data)
             xPlayer.addInventoryItem(data.item, 1)
             TriggerClientEvent('d-weaponshop:notify', source, 'fa-solid fa-basket-shopping', locale['bought'] ..string.lower(item).. '.', 5000)
         else
-            TriggerClientEvent('d-weaponshop:notify', source, 'fa-solid fa-sack-xmark', locale['full_inv'], 5000)
+            TriggerClientEvent('d-weaponshop:notify', source, 'fa-solid fa-person-circle-xmark', locale['full_inv'], 5000)
         end
+    end
+end)
+
+ESX.RegisterServerCallback('d-weaponshop:getlicense', function(source, cb, data)
+    if config.license then
+        local xPlayer = ESX.GetPlayerFromId(source)
+        local check = false
+        TriggerEvent('esx_license:getLicenses', source, function(licenses)
+            for i = 0, #licenses do
+                if licenses[i].type == 'weapon' then
+                    check = true
+                end
+            end
+        end)
+        cb(check)
+    else
+        cb(true)
+    end
+end)
+
+ESX.RegisterServerCallback('d-weaponshop:buylicense', function(source, cb, data)
+    local xPlayer = ESX.GetPlayerFromId(source)
+    if xPlayer.getAccount('money').money >= data.price then
+        TriggerEvent('esx_license:addLicense', source, 'weapon', function()
+        end)
+        TriggerClientEvent('d-weaponshop:notify', source, 'fa-solid fa-file-certificate', locale['bought_license'], 5000)
     end
 end)

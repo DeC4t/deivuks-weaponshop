@@ -22,3 +22,6 @@ config.bullets = {
 config.weapon_shops = {
     {name = 'PaletoBay', coords = vector3(-330.2026, 6085.0059, 31.4498), heading = 12.9072}
 }
+
+config.license = true
+config.license_price = 15000

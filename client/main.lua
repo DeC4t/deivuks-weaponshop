@@ -14,6 +14,17 @@ else
 end
 
 Citizen.CreateThread(function()
+    for k,v in ipairs(config.weapon_shops) do
+        blip = AddBlipForCoord(v.coords)
+		SetBlipSprite (blip, 110)
+		SetBlipDisplay(blip, 4)
+		SetBlipScale  (blip, 1.0)
+		SetBlipColour (blip, 38)
+		SetBlipAsShortRange(blip, true)
+		BeginTextCommandSetBlipName('STRING')
+		AddTextComponentSubstringPlayerName(locale['blip'])
+		EndTextCommandSetBlipName(blip)
+    end
     AddTarget()
     Wait(1000)
     SendNUIMessage({
@@ -24,11 +35,6 @@ Citizen.CreateThread(function()
         bullets = config.bullets,
         currency = config.currency,
     })
-end)
-
-RegisterNetEvent('esx:playerLoaded')
-AddEventHandler('esx:playerLoaded', function(playerData)
-    AddTarget()
 end)
 
 function AddTarget()
@@ -53,20 +59,27 @@ function AddTarget()
 end
 
 RegisterNetEvent('d-weaponshop:openmenu', function()
-    local coords = GetEntityCoords(PlayerPedId())
-    for k,v in ipairs(config.weapon_shops) do
-        if #(coords - v.coords) < 3.0 then
-            ESX.TriggerServerCallback('d-weaponshop:GetUserData', function(data)
-                TriggerScreenblurFadeIn(500)
-                SendNUIMessage({
-                    action = 'menu',
-                    show = true,
-                    user_data = data,
-                })
-                SetNuiFocus(true, true)
-            end)
+    ESX.TriggerServerCallback('d-weaponshop:getlicense', function(has)
+        if has then
+            local coords = GetEntityCoords(PlayerPedId())
+            for k,v in ipairs(config.weapon_shops) do
+                if #(coords - v.coords) < 3.0 then
+                    ESX.TriggerServerCallback('d-weaponshop:GetUserData', function(data)
+                        TriggerScreenblurFadeIn(500)
+                        SendNUIMessage({
+                            action = 'menu',
+                            show = true,
+                            user_data = data,
+                        })
+                        SetNuiFocus(true, true)
+                    end)
+                end
+            end
+        else
+            TriggerEvent('d-weaponshop:notify', 'fa-solid fa-sack-xmark', locale['no_license'], 5000)
+            pickmenu(locale['buy_license'], config.license_price)
         end
-    end
+    end)
 end)
 
 RegisterNUICallback('buy', function(data)
@@ -97,3 +110,23 @@ RegisterNetEvent('d-weaponshop:notify', function(icon, text, duration)
         duration = duration,
     })
 end)
+
+RegisterNUICallback('license', function(data)
+    SendNUIMessage({
+        action = 'pickmenu',
+        show = false,
+    })
+    TriggerScreenblurFadeOut(500)
+    SetNuiFocus(false, false)
+    ESX.TriggerServerCallback('d-weaponshop:buylicense', function()
+    end)
+end)
+
+function pickmenu(text, price)
+    SendNUIMessage({
+        action = 'pickmenu',
+        text = text,
+        price = price,
+    })
+    SetNuiFocus(true, true)
+end

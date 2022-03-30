@@ -28,6 +28,9 @@ $(function() {
             case 'notify':
                 notify(data.icon, data.text, data.duration)
             break;
+            case 'pickmenu':
+                pickmenu(data.text, data.price)
+            break;
         }         
     })
 });
@@ -139,6 +142,32 @@ function openbuy(item, price, item_type) {
     document.getElementById("notify").className = "open"
 }
 
+function pickmenu(text, price) {
+    document.getElementById("notify").style.display = 'block'
+    document.getElementById("notify").innerHTML = `
+        <i class="fa-solid fa-xmark cl_icon" onclick="noticlose2()"></i>
+        <a class="text" style="font-size: 20px;">${text}</a><br>
+        <div class="buttons">
+            <button onclick="license('${price}')">${locale['yes']}</button> 
+            <button onclick="noticlose2()">${locale['no']}</button>
+        </div>
+    `
+    document.getElementById("notify").className = "open"
+}
+
+function license(price) {
+    document.getElementById("notify").className = "close"
+    setTimeout(() => {
+        document.getElementById("notify").style.display = "none"
+    }, 900)
+    if (UserData['money'] >= price) {
+        $.post(`https://${GetParentResourceName()}/license`, JSON.stringify({}));
+    } else {
+        notify('fa-solid fa-sack-xmark', locale['no_money'], 3000)
+        $.post(`https://${GetParentResourceName()}/close`, JSON.stringify({}));
+    }
+}
+
 function payment(type, item, price, item_type) {
     document.getElementById("notify").className = "close"
     setTimeout(() => {
@@ -168,6 +197,14 @@ function noticlose() {
     setTimeout(() => {
         document.getElementById("notify").style.display = "none"
     }, 900)
+}
+
+function noticlose2() {
+    document.getElementById("notify").className = "close"
+    setTimeout(() => {
+        document.getElementById("notify").style.display = "none"
+    }, 900)
+    $.post(`https://${GetParentResourceName()}/close`, JSON.stringify({}));
 }
 
 window.onload = (event) => {
