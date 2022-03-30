@@ -4,14 +4,14 @@
 
 **FEATURES**
 
--Cool notifications
--Simple and beautiful design
--Simple configuration and locales
--Good performance
+- Cool notifications
+- Simple and beautiful design
+- Simple configuration and locales
+- Good performance
 
 **DEPENDENCIES**
--ESX
--qtarget
+- ESX
+- qtarget
 
 **PREVIEW**
 [Click on me](https://www.youtube.com/watch?v=dvjvxXklWhY)
