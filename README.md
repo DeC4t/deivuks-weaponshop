@@ -17,7 +17,9 @@
 [Click on me](https://www.youtube.com/watch?v=dvjvxXklWhY)
 
 **CUSTOMIZABILITY**
+
 *Resource is not obfuscated so you can edit anything and anywhere! Also it has a config so it is easy to add weapons, attachments and customize other things.*
 
 **SUPPORT**
+
 *Our team is always ready to help you with our resources, if it doesn’t work or it shows some errors you can always create a ticket in our discord.*
