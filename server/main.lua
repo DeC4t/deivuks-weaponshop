@@ -50,8 +50,12 @@ ESX.RegisterServerCallback('d-weaponshop:getlicense', function(source, cb, data)
         local check = false
         TriggerEvent('esx_license:getLicenses', source, function(licenses)
             for i = 0, #licenses do
-                if licenses[i].type == 'weapon' then
-                    check = true
+                if licenses == nil or licenses[i] == nil or licenses[i].type == nil then
+                    check = false
+                else
+                    if licenses[i].type == 'weapon' then
+                        check = true
+                    end
                 end
             end
         end)
