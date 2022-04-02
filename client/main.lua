@@ -111,22 +111,20 @@ RegisterNetEvent('d-weaponshop:notify', function(icon, text, duration)
     })
 end)
 
-RegisterNUICallback('license', function(data)
-    SendNUIMessage({
-        action = 'pickmenu',
-        show = false,
-    })
-    TriggerScreenblurFadeOut(500)
+RegisterNUICallback('license', function()
     SetNuiFocus(false, false)
     ESX.TriggerServerCallback('d-weaponshop:buylicense', function()
     end)
 end)
 
 function pickmenu(text, price)
-    SendNUIMessage({
-        action = 'pickmenu',
-        text = text,
-        price = price,
-    })
-    SetNuiFocus(true, true)
+    ESX.TriggerServerCallback('d-weaponshop:GetUserData', function(data)
+        SendNUIMessage({
+            action = 'pickmenu',
+            user_data = data,
+            text = text,
+            price = price,
+        })
+        SetNuiFocus(true, true)
+    end)
 end

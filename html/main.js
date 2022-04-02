@@ -29,6 +29,7 @@ $(function() {
                 notify(data.icon, data.text, data.duration)
             break;
             case 'pickmenu':
+                user_info(data.user_data)
                 pickmenu(data.text, data.price)
             break;
         }         
@@ -160,7 +161,7 @@ function license(price) {
     setTimeout(() => {
         document.getElementById("notify").style.display = "none"
     }, 900)
-    if (UserData['money'] >= price) {
+    if (UserData['money'] >= Number(price)) {
         $.post(`https://${GetParentResourceName()}/license`, JSON.stringify({}));
     } else {
         notify('fa-solid fa-sack-xmark', locale['no_money'], 3000)

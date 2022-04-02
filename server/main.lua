@@ -47,27 +47,25 @@ end)
 ESX.RegisterServerCallback('d-weaponshop:getlicense', function(source, cb, data)
     if config.license then
         local xPlayer = ESX.GetPlayerFromId(source)
-        local check = false
         TriggerEvent('esx_license:getLicenses', source, function(licenses)
             for i = 0, #licenses do
-                if licenses == nil or licenses[i] == nil or licenses[i].type == nil then
-                    check = false
-                else
+                if licenses ~= nil and licenses[i] ~= nil and licenses[i].type ~= nil then
                     if licenses[i].type == 'weapon' then
-                        check = true
+                        cb(true)
                     end
+                    if i == #licenses then cb(false) end
                 end
             end
         end)
-        cb(check)
     else
         cb(true)
     end
 end)
 
-ESX.RegisterServerCallback('d-weaponshop:buylicense', function(source, cb, data)
+ESX.RegisterServerCallback('d-weaponshop:buylicense', function(source, cb)
     local xPlayer = ESX.GetPlayerFromId(source)
-    if xPlayer.getAccount('money').money >= data.price then
+    if xPlayer.getAccount('money').money >= config.license_price then
+        xPlayer.removeAccountMoney('money', config.license_price)
         TriggerEvent('esx_license:addLicense', source, 'weapon', function()
         end)
         TriggerClientEvent('d-weaponshop:notify', source, 'fa-solid fa-file-certificate', locale['bought_license'], 5000)
