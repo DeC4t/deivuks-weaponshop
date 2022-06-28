@@ -11,6 +11,7 @@ ESX.RegisterServerCallback('d-weaponshop:buyweapon', function(source, cb, data)
     local price = 1000
     data.item = '' ..data.item
     local item = 'suppressor'
+    local ammount = 1
     if data.item_type == 'weapon' then
         for k,v in ipairs(config.weapons) do
             if data.item == v.weapon then
@@ -30,13 +31,14 @@ ESX.RegisterServerCallback('d-weaponshop:buyweapon', function(source, cb, data)
             if data.item == v.bullet then
                 price = v.price
                 item = v.name
+                ammount = v.ammount
             end
         end
     end
     if xPlayer.getAccount('' ..data.type).money >= price then
         if xPlayer.canCarryItem(data.item, 1) then
             xPlayer.removeAccountMoney(data.type, price)
-            xPlayer.addInventoryItem(data.item, 1)
+            xPlayer.addInventoryItem(data.item, ammount)
             TriggerClientEvent('d-weaponshop:notify', source, 'fa-solid fa-basket-shopping', locale['bought'] ..string.lower(item).. '.', 5000)
         else
             TriggerClientEvent('d-weaponshop:notify', source, 'fa-solid fa-person-circle-xmark', locale['full_inv'], 5000)
